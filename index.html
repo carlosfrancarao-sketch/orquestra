@@ -462,69 +462,27 @@
 /* ====== BADGE 25 ANOS ====== */
 .badge-25 {
   position: absolute;
-  top: -25px;
-  right: -250px;
-  font-size: 4.2em;
+  top: -20px;
+  right: -260px; /* Ajuste conforme layout */
+  font-size: 4.3em;
   font-weight: 900;
-  background: linear-gradient(90deg, #b8b8b8, #e0e0e0, #c0c0c0, #f8f8f8);
+  background: linear-gradient(90deg, #c0c0c0, #f0f0f0, #d4d4d4, #e0e0e0, #f8f8f8);
   background-size: 200% 200%;
-    -webkit-text-fill-color: transparent;
-  text-shadow: 2px 2px 6px rgba(255,255,255,0.2);
-  transform: rotate(-12deg);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 1px 1px 8px rgba(255,255,255,0.3);
+  transform: rotate(-15deg);
   z-index: 1;
   pointer-events: none;
   animation: liquidMetal 4s ease-in-out infinite;
 }
 
-/* ====== ANIMAÇÃO ====== */
 @keyframes liquidMetal {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
-/* ====== MENU ====== */
-.header-moderno nav ul {
-  list-style: none;
-  display: flex;
-  gap: 30px;
-  margin: 0;
-  padding: 0;
-}
-
-.header-moderno nav a {
-  text-decoration: none;
-  color: #f1f1f1;
-  font-weight: 500;
-  transition: color 0.3s ease;
-}
-
-.header-moderno nav a:hover {
-  color: #a3a3a3;
-}
-
-/* ====== RESPONSIVIDADE ====== */
-@media (max-width: 768px) {
-  .header-moderno {
-    flex-direction: column;
-    text-align: center;
-    padding: 20px;
-  }
-
-  .badge-25 {
-    position: static;
-    display: block;
-    transform: none;
-    margin-top: 10px;
-    font-size: 3em;
-  }
-
-  .header-moderno nav ul {
-    flex-direction: column;
-    gap: 15px;
-    margin-top: 15px;
-  }
-}
 
 </style>
 
