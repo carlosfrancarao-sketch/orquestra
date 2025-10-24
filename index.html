@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Orquestra e Coral Jubilath - Premium Plus</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Roboto", sans-serif;
+        background: #f4f4f4;
+        color: #333;
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+      header {
+        background: #1a1a1a;
+        color: white;
+        padding: 40px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        transition: background 0.3s;
+      }
+      header h1 {
+        font-size: 1.6rem;
+      }
+      nav ul {
+        list-style: none;
+        display: flex;
+        gap: 25px;
+      }
+      nav a {
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+        transition: 0.3s;
+      }
+      nav a:hover {
+        color: #e0b84d;
+      }
+      .hero {
+        background: ("https://images.unsplash.com/photo-1507838153414-b4b713384a76?auto=format&fit=crop&w=1600&q=80")url
+          center/cover no-repeat;
+        color: white;
+        text-align: center;
+        padding: 160px 20px;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero h2 {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: 1s ease;
+      }
+      .hero p {
+        font-size: 1.3rem;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: 1s ease 0.3s;
+      }
+      .hero.show h2,
+      .hero.show p {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .hero::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.35);
+      }
+      .hero canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+      .hero audio {
+        margin-top: 20px;
+        width: 320px;
+        border-radius: 10px;
+        position: relative;
+        z-index: 2;
+      }
+      section {
+        padding: 80px 20px;
+        max-width: 1100px;
+        margin: auto;
+        opacity: 0;
+        transform: translateY(50px);
+        transition: 1s ease;
+      }
+      section.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      section h2 {
+        font-size: 2.4rem;
+        margin-bottom: 25px;
+        text-align: center;
+        color: #333;
+        position: relative;
+      }
+      section h2::after {
+        content: "";
+        width: 60px;
+        height: 3px;
+        background: #e0b84d;
+        display: block;
+        margin: 15px auto 0;
+        border-radius: 2px;
+        box-shadow: 0 2px 6px rgba(224, 184, 77, 0.5);
+      }
+      section p {
+        text-align: center;
+        max-width: 800px;
+        margin: 0 auto;
+        font-size: 1.1rem;
+      }
+      .imagem-coral,
+      .parcerias,
+      .galeria {
+        padding: 50px 20px;
+        text-align: center;
+        position: relative;
+        z-index: 1;
+      }
+      .imagem-coral img,
+      .galeria img,
+      .parcerias img {
+        width: 80%;
+        max-width: 1200px;
+        height: auto;
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+        display: block;
+        margin: 0 auto;
+        transition: transform 0.6s, filter 0.6s, box-shadow 0.6s;
+        cursor: pointer;
+      }
+      .imagem-coral img:hover,
+      .galeria img:hover,
+      .parcerias img:hover {
+        transform: scale(1.06);
+        filter: brightness(1.15);
+        box-shadow: 0 10px 30px rgba(224, 184, 77, 0.5);
+      }
+      .galeria .grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 18px;
+      }
+      .galeria .grid a {
+        width: calc(33% - 12px);
+      }
+      .galeria .grid img {
+        width: 100%;
+        border-radius: 10px;
+      }
+      .agenda,
+      .videos,
+      .depoimentos,
+      .parcerias {
+        background: #fff;
+        margin-top: 50px;
+        border-radius: 14px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        padding: 50px 30px;
+        transition: transform 0.4s, box-shadow 0.4s;
+      }
+      .agenda:hover,
+      .videos:hover,
+      .depoimentos:hover,
+      .parcerias:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 8px 25px rgba(224, 184, 77, 0.3);
+      }
+      .videos iframe {
+        width: 100%;
+        max-width: 700px;
+        height: 380px;
+        border-radius: 14px;
+        display: block;
+        margin: 20px auto;
+        transition: transform 0.5s;
+      }
+      .depoimentos blockquote {
+        font-style: italic;
+        text-align: center;
+        margin: 25px auto;
+        max-width: 750px;
+        color: #444;
+        position: relative;
+      }
+      .depoimentos cite {
+        display: block;
+        text-align: center;
+        margin-top: 12px;
+        font-weight: 600;
+        color: #555;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        max-width: 520px;
+        margin: 30px auto 0;
+      }
+      form input,
+      form textarea {
+        padding: 14px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        font-size: 1rem;
+        width: 100%;
+        transition: border 0.3s, box-shadow 0.3s;
+      }
+      form input:focus,
+      form textarea:focus {
+        border-color: #e0b84d;
+        outline: none;
+        box-shadow: 0 0 8px rgba(224, 184, 77, 0.3);
+      }
+      form button {
+        background: #e0b84d;
+        color: white;
+        border: none;
+        padding: 14px;
+        font-weight: 700;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.3s transform 0.3s, box-shadow 0.3s;
+      }
+      form button:hover {
+        background: #d4a918;
+        transform: scale(1.1);
+        box-shadow: 0 6px 20px rgba(224, 184, 77, 0.4);
+      }
+      footer {
+        background: #1a1a1a;
+        color: white;
+        text-align: center;
+        padding: 25px;
+        margin-top: 50px;
+        font-size: 0.9rem;
+      }
+      .lightbox {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        flex-direction: column;
+        overflow: hidden;
+      }
+      .lightbox.active {
+        display: flex;
+      }
+      .lightbox img {
+        max-width: 80%;
+        max-height: 70%;
+        border-radius: 14px;
+        transition: opacity 0.8s ease, transform 0.8s ease;
+      }
+      .lightbox img.fade-out {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      .lightbox img.fade-in {
+        opacity: 1;
+        transform: scale(1);
+      }
+      .lightbox .close,
+      .lightbox .prev,
+      .lightbox .next {
+        position: absolute;
+        color: white;
+        font-size: 2.8rem;
+        padding: 14px;
+        cursor: pointer;
+        user-select: none;
+        transition: color 0.3s, transform 0.3s;
+      }
+      .lightbox .close:hover,
+      .lightbox .prev:hover,
+      .lightbox .next:hover {
+        color: #e0b84d;
+        transform: scale(1.2);
+      }
+      .lightbox .close {
+        top: 25px;
+        right: 35px;
+        font-size: 3rem;
+      }
+      .lightbox .prev {
+        left: 25px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      .lightbox .next {
+        right: 25px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      .lightbox .thumbs {
+        display: flex;
+        gap: 12px;
+        margin-top: 25px;
+        overflow-x: auto;
+        max-width: 90%;
+        justify-content: center;
+      }
+      .lightbox .thumbs img {
+        width: 90px;
+        height: 70px;
+        object-fit: cover;
+        border-radius: 6px;
+        cursor: pointer;
+        opacity: 0.6;
+        transition: 0.3s, box-shadow 0.3s;
+      }
+      .lightbox .thumbs img.active {
+        opacity: 1;
+        border: 2px solid #e0b84d;
+        box-shadow: 0 0 12px rgba(224, 184, 77, 0.5);
+      }
+      .parallax {
+        transform-style: preserve-3d;
+        transition: transform 0.5s;
+      }
+      @media (max-width: 768px) {
+        header {
+          flex-direction: column;
+          text-align: center;
+          gap: 10px;
+        }
+        nav ul {
+          flex-direction: column;
+          gap: 10px;
+        }
+        .hero {
+          padding: 140px 20px;
+        }
+        .videos iframe {
+          height: 260px;
+        }
+        .imagem-coral img,
+        .galeria .grid a {
+          width: 95%;
+        }
+      }
+    </style>
+  
+
+<header class="header-moderno-metalico">
+  <div class="logo">
+    <h1>Orquestra e Coral <span>Jubilath</span></h1>
+    <div class="badge-25">25 Anos</div>
+  </div>
+
+  <nav>
+    <ul>
+      <li><a href="#quem-somos">Quem Somos</a></li>
+      <li><a href="#agenda">Agenda</a></li>
+      <li><a href="#videos">Vídeos</a></li>
+      <li><a href="#galeria">Galeria</a></li>
+    </ul>
+  </nav>
+
+  <div class="btns-sociais">
+    <a href="https://www.youtube.com/watch?v=9s-bozaM6jU" target="_blank" class="btn-youtube">
+      YouTube Oficial
+    </a>
+    <a href="https://www.instagram.com/orquestracoraljubilath/" target="_blank" class="btn-instagram">
+      Instagram
+    </a>
+  </div>
+</header>
+
+<style>
+.header-moderno-metalico {
+  background: linear-gradient(90deg, #0a0a0a, #1a1a1a);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 60px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  flex-wrap: wrap;
+}
+
+.logo { position: relative; }
+
+.logo h1 {
+  font-size: 2.6em;
+  font-weight: 700;
+  color: #f8f8f8;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 5px rgba(255, 215, 0, 0.3);
+  margin: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.logo span { color: #f0f0f0; font-weight: 800; }
+
+/* === 25 ANOS METÁLICO LÍQUIDO === */
+/* ====== HEADER ====== */
+.header-moderno {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(90deg, #222, #333);
+  padding: 25px 60px;
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  overflow: hidden;
+}
+
+.logo-container {
+  position: relative;
+  display: inline-block;
+}
+
+.header-moderno h1 {
+  font-size: 2.8em;
+  font-weight: 700;
+  margin: 0;
+  color: #f7f6f6;
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.4);
+}
+
+/* ====== BADGE 25 ANOS ====== */
+.badge-25 {
+  position: absolute;
+  top: -25px;
+  right: -250px;
+  font-size: 4.2em;
+  font-weight: 900;
+  background: linear-gradient(90deg, #b8b8b8, #e0e0e0, #c0c0c0, #f8f8f8);
+  background-size: 200% 200%;
+    -webkit-text-fill-color: transparent;
+  text-shadow: 2px 2px 6px rgba(255,255,255,0.2);
+  transform: rotate(-12deg);
+  z-index: 1;
+  pointer-events: none;
+  animation: liquidMetal 4s ease-in-out infinite;
+}
+
+/* ====== ANIMAÇÃO ====== */
+@keyframes liquidMetal {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ====== MENU ====== */
+.header-moderno nav ul {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+  margin: 0;
+  padding: 0;
+}
+
+.header-moderno nav a {
+  text-decoration: none;
+  color: #f1f1f1;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.header-moderno nav a:hover {
+  color: #a3a3a3;
+}
+
+/* ====== RESPONSIVIDADE ====== */
+@media (max-width: 768px) {
+  .header-moderno {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .badge-25 {
+    position: static;
+    display: block;
+    transform: none;
+    margin-top: 10px;
+    font-size: 3em;
+  }
+
+  .header-moderno nav ul {
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 15px;
+  }
+}
+
+</style>
+
+
+
+
+
+
+
+
+    <!--<section class="hero parallax">
+      <canvas id="particles"></canvas>
+      <h2>Harmonia que Toca o Coração</h2>
+      <p>Música que inspira fé, emoção e celebração.</p>
+      <audio id="bgMusic" controls loop>
+        <source src="hino-jubilath.mp3" type="audio/mpeg" />
+        Seu navegador não suporta o elemento de áudio.
+      </audio>
+    </section>-->
+
+  <section class="imagem-coral parallax">
+  <img src="./CORAL.jpg" alt="coral" />
+  <p style="color: black;">Música que inspira fé, celebração e adoração.</p>
+  
+</section>
+
+<style>
+  .imagem-coral {
+    text-align: center;
+    padding: 60px 20px;
+  }
+
+  .imagem-coral img {
+    width: 80%;       /* Aumenta a imagem para 80% da largura do container */
+    max-width: 1000px; /* Limita o tamanho máximo */
+    height: auto;     /* Mantém proporção da imagem */
+    border-radius: 15px; /* Opcional: bordas arredondadas */
+    margin-bottom: 20px;
+  }
+
+  .imagem-coral p {
+    font-size: 1.5em;
+    color: #fff;
+    margin-top: 10px;
+  }
+
+  /* Responsivo para celulares */
+  @media (max-width: 480px) {
+    .imagem-coral img {
+      width: 100%;  /* Ajusta imagem à tela pequena */
+    }
+
+    .imagem-coral p {
+      font-size: 1.2em;
+    }
+  }
+</style>
+
+
+<section id="quem-somos" class="parallax">
+  <h2>Quem Somos</h2>
+
+  <p>
+    A Orquestra e Coral Jubilath é uma formação musical dedicada a louvar a Jesus
+    e evangelizar através da música.
+  </p>
+
+  <p>
+    Os integrantes são obreiros e membros da Igreja Assembleia de Deus em Carapicuíba –
+    Campo de Carapicuíba – Ministério de Madureira, dirigida pelo
+    <strong>Pr. Jasson Secundo Barreto</strong> (Presidente) e
+    <strong>Pr. Davi Dias</strong> (Pastor Local),
+    localizada na Rua Reverendo Luiz Gonzaga de Medeiros, 85, Vila Martins – Carapicuíba – SP.
+  </p>
+
+  <p>
+    A Orquestra e Coral Jubilath foram regidos por quase 25 anos pelo saudoso <strong>Maestro Mozza</strong> e atualmente
+    seu regente é o <strong>Maestro Eduardo Morais</strong>.
+  </p>
+
+  <div class="equipe">
+    <div class="membro fade-in">
+      <a href="#"><img src="./jasson.jpg" alt="Pr. Jasson" /></a>
+      <p>Pr. Jasson</p>
+    </div>
+
+    <div class="membro fade-in">
+      <a href="#"><img src="./davi.jpg" alt="Pr. Davi" /></a>
+      <p>Pr. Davi</p>
+    </div>
+
+    <div class="membro fade-in">
+      <a href="#"><img src="./mozza2.jpg" alt="Maestro Mozza" /></a>
+      <p>Maestro Mozza</p>
+    </div>
+
+    <div class="membro fade-in">
+      <a href="#"><img src="./eduardo.JPG" alt="Maestro Eduardo" /></a>
+      <p>Maestro Eduardo</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  #quem-somos {
+    text-align: center;
+    padding: 80px 20px;
+    background: #f7f7f7;
+    color: #000;
+  }
+
+  #quem-somos h2 {
+    font-size: 2.8em;
+    margin-bottom: 30px;
+    color: #111;
+  }
+
+  #quem-somos p {
+    font-size: 1.2em;
+    max-width: 900px;
+    margin: 10px auto;
+    line-height: 1.6em;
+  }
+
+  .equipe {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 40px;
+    margin-top: 50px;
+  }
+
+  .membro {
+    text-align: center;
+  }
+
+  .membro img {
+    width: 220px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #000;
+    position: relative;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.5s;
+  }
+
+  /* ✨ Efeito dourado animado */
+  .membro img:hover {
+    transform: scale(1.1);
+    border-color: gold;
+    box-shadow: 0 0 25px gold, 0 0 50px rgba(255, 215, 0, 0.6);
+    animation: brilho 1.5s infinite alternate;
+  }
+
+  @keyframes brilho {
+    from {
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    }
+    to {
+      box-shadow: 0 0 40px rgba(255, 215, 0, 1);
+    }
+  }
+
+  .membro p {
+    margin-top: 12px;
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+
+  /* --- Animação Fade In --- */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1s ease-out, transform 1s ease-out;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 600px) {
+    .membro img {
+      width: 150px;
+      height: 150px;
+    }
+    .membro p {
+      font-size: 1em;
+    }
+  }
+</style>
+
+<script>
+  // Script para ativar o fade-in quando o elemento entra na tela
+  const fadeEls = document.querySelectorAll('.fade-in');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  });
+
+  fadeEls.forEach(el => observer.observe(el));
+</script>
+
+
+
+
+    </section>
+
+    <section id="agenda" class="agenda parallax">
+      <h2>Agenda</h2>
+      <p>
+        Confira nossas próximas apresentações e participe dessa experiência
+        de louvor ao Senhor Jesus.
+      </p>
+
+      <p><strong>Dia 25 de outubro - Aniversário de 25 anos - Jubileu de Prata</p></strong>
+      <p><strong>Dia 26 de outubro - Aniversário de 25 anos - Jubileu de Prata</p></strong>
+      <br>
+        <p>AD Carapicuiba - Campo de Carapicuíba - Ministério de Madureira</p>
+        <p>Rua Reverendo Luiz Gonzaga de Medeiros, 85, Vila Martins - Carapicúiba - SP
+</p>
+
+    
+     <section id="videos" class="videos parallax">
+ <h2 style="color: white;">Vídeos</h2>
+
+  <!-- Vídeo -->
+  <iframe
+    src="./video.mp4"
+    title="Vídeo Jubilath"
+    frameborder="0"
+    allowfullscreen
+  ></iframe>
+
+  <!-- Botão YouTube estilizado -->
+  <a href="https://www.youtube.com/watch?v=hbU7hh0AJRU" target="_blank" class="btn-youtube">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg" 
+         alt="YouTube" style="width:24px; margin-right:8px;">
+    Veja outros vídeos no YouTube
+  </a>
+</section>
+
+<style>
+  .videos {
+    text-align: center;
+    padding: 80px 20px;
+    background: #111; /* fundo escuro */
+    color: #fff;
+  }
+
+  .videos h2 {
+    font-size: 3em;
+    margin-bottom: 40px;
+  }
+
+  .videos iframe {
+    width: 80%;
+    max-width: 800px;
+    height: 450px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+  }
+
+  /* Botão YouTube */
+  .btn-youtube {
+    display: inline-flex;
+    align-items: center;
+    background: #ff0000;
+    color: #fff;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 12px 25px;
+    border-radius: 30px;
+    font-size: 1.1em;
+    transition: all 0.3s ease;
+  }
+
+  .btn-youtube:hover {
+    background: #cc0000;
+    transform: scale(1.05);
+  }
+
+  .btn-youtube img {
+    display: inline-block;
+  }
+
+  @media (max-width: 480px) {
+    .videos iframe {
+      width: 100%;
+      height: 250px;
+    }
+
+    .btn-youtube {
+      padding: 10px 18px;
+      font-size: 1em;
+    }
+
+    .btn-youtube img {
+      width: 20px;
+      margin-right: 6px;
+    }
+  }
+</style>
+
+
+     
+
+<section id="depoimentos" class="depoimentos parallax">
+    <h2>Depoimentos</h2>
+  <p><strong style="color: black;">Confira nossos Reels no Instagram</strong></p>
+
+
+  <div class="reels-grid">
+    <a href="https://www.instagram.com/reel/DP2MYvsETnE/" target="_blank" class="btn-instagram">
+      Reel 1
+    </a>
+    <a href="https://www.instagram.com/reel/DP-eD7zDOFO/" target="_blank" class="btn-instagram">
+      Reel 2
+    </a>
+    <a href="https://www.instagram.com/reel/DQAiuP6EQx9/" target="_blank" class="btn-instagram">
+      Reel 3
+    </a>
+    <a href="https://www.instagram.com/reel/DQDVoggkRoq/" target="_blank" class="btn-instagram">
+      Reel 4
+    </a>
+    <a href="https://www.instagram.com/reel/DQFzKlKkdYU/" target="_blank" class="btn-instagram">
+      Reel 5
+    </a>
+  </div>
+</section>
+
+<style>
+  /* Seção Parallax */
+  .depoimentos {
+    background: url('sua-imagem-de-fundo.jpg') no-repeat center center fixed;
+    background-size: cover;
+    padding: 120px 20px;
+    text-align: center;
+    color: #fff;
+  }
+
+  .depoimentos h2 {
+    font-size: 3em;
+    margin-bottom: 50px;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.6);
+  }
+
+  /* Grid de Reels */
+  .reels-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+    justify-items: center;
+  }
+
+  /* Botões Instagram */
+  .btn-instagram {
+    display: inline-block;
+    padding: 15px 25px;
+    background: #e1306c;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.2em;
+    border-radius: 30px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .btn-instagram:hover {
+    background: #c12c5d;
+    transform: translateY(-6px) scale(1.05);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  }
+
+  /* Animação flutuante */
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+    100% { transform: translateY(0px); }
+  }
+
+  /* Responsividade */
+  @media (max-width: 768px) {
+    .depoimentos h2 {
+      font-size: 2.2em;
+    }
+
+    .btn-instagram {
+      padding: 12px 20px;
+      font-size: 1em;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .depoimentos h2 {
+      font-size: 1.8em;
+    }
+
+    .btn-instagram {
+      padding: 10px 15px;
+      font-size: 0.95em;
+    }
+  }
+</style>
+
+
+
+
+<!--
+    <section id="parcerias" class="parcerias parallax">
+      <h2>Parcerias</h2>
+      <div>
+        <img src="./logo-igreja.png" alt="Logo Igreja" />
+        <img src="" alt="Logo Escola" />
+      </div>
+    </section>
+    -->
+
+    <section id="galeria" class="galeria parallax">
+      <h2>Galeria</h2>
+      <div class="grid">
+        <a href="#"><img src="./FOTO1.jpeg" alt="FOTO1" /></a>
+        <a href="#"><img src="./FOTO2.jpeg" alt="Foto2" /></a>
+        <a href="#"><img src="./mozza.jpg" alt="Foto 1" /></a>
+        <a href="#"><img src="./FOTO1 (8).jpeg" alt="Foto 2" /></a>
+        <a href="#"><img src="./FOTO1 (9).jpeg" alt="Foto 3" /></a>
+        <a href="#"><img src="./FOTO1 (10).jpeg" alt="Foto 4" /></a>
+        <a href="#"><img src="./FOTO1 (11).jpeg" alt="Foto 5" /></a>
+        <a href="#"><img src="./FOTO1 (12).jpeg" alt="Foto 6" /></a>
+        <a href="#"><img src="./FOTO1 (13).jpeg" alt="Foto 7" /></a>
+        <a href="#"><img src="./FOTO1 (14).jpeg" alt="Foto 8" /></a>
+        <a href="#"><img src="./FOTO1 (15).jpeg" alt="Foto 9" /></a>
+        <a href="#"><img src="./FOTO1 (16).jpeg" alt="Foto 10" /></a>
+        <a href="#"><img src="./FOTO1 (17).jpeg" alt="Foto 11" /></a>
+        <a href="#"><img src="./FOTO1 (18).jpeg" alt="Foto 12" /></a>
+        <a href="#"><img src="./FOTO1 (19).jpeg" alt="Foto 13" /></a>
+        <a href="#"><img src="./FOTO1 (20).jpeg" alt="Foto 14" /></a>
+        <a href="#"><img src="./FOTO1 (21).jpeg" alt="Foto 15" /></a>
+        <a href="#"><img src="./FOTO1 (22).jpeg" alt="Foto 16" /></a>
+        <a href="#"><img src="./FOTO1 (23).jpeg" alt="Foto 17" /></a>
+        <a href="#"><img src="./FOTO1 (24).jpeg" alt="Foto 18" /></a>
+        <a href="#"><img src="./FOTO1 (25).jpeg" alt="Foto 19" /></a>
+        <a href="#"><img src="./FOTO1 (26).jpeg" alt="Foto 20" /></a>
+        <a href="#"><img src="./FOTO1 (27).jpeg" alt="Foto 21" /></a>
+        <a href="#"><img src="./FOTO1 (28).jpeg" alt="Foto 22" /></a>
+        <a href="#"><img src="./FOTO1 (29).jpeg" alt="Foto 23" /></a>
+        <a href="#"><img src="./FOTO1 (30).jpeg" alt="Foto 24" /></a>
+        <a href="#"><img src="./FOTO1 (30).jpeg" alt="Foto 25" /></a>
+        <a href="#"><img src="./FOTO1 (30).jpeg" alt="Foto 26" /></a>
+        <a href="#"><img src="./FOTO1 (31).jpeg" alt="Foto 27" /></a>
+        <a href="#"><img src="./FOTO1 (32).jpeg" alt="Foto 28" /></a>
+        <a href="#"><img src="./FOTO1 (33).jpeg" alt="Foto 29" /></a>
+        <a href="#"><img src="./FOTO1 (34).jpeg" alt="Foto 30" /></a>
+        <a href="#"><img src="./FOTO1 (35).jpeg" alt="Foto 31" /></a>
+        <a href="#"><img src="./FOTO1 (36).jpeg" alt="Foto 32" /></a>
+        <a href="#"><img src="./FOTO1 (37).jpeg" alt="Foto 33" /></a>
+        <a href="#"><img src="./FOTO1 (38).jpeg" alt="Foto 27" /></a>
+        <a href="#"><img src="./FOTO1 (39).jpeg" alt="Foto 28" /></a>
+        <a href="#"><img src="./FOTO1 (40).jpeg" alt="Foto 29" /></a>
+        <a href="#"><img src="./FOTO1 (41).jpeg" alt="Foto 30" /></a>
+        <a href="#"><img src="./FOTO1 (42).jpeg" alt="Foto 31" /></a>
+        <a href="#"><img src="./FOTO1 (43).jpeg" alt="Foto 32" /></a>
+        <a href="#"><img src="./FOTO1 (44).jpeg" alt="Foto 33" /></a>
+        <a href="#"><img src="./FOTO1 (45).jpeg" alt="Foto 30" /></a>
+        <a href="#"><img src="./FOTO1 (46).jpeg" alt="Foto 31" /></a>
+        <a href="#"><img src="./FOTO1 (47).jpeg" alt="Foto 32" /></a>
+        <a href="#"><img src="./FOTO1 (48).jpeg" alt="Foto 33" /></a>
+      </div>
+    </section>
+
+    <div class="lightbox" id="lightbox">
+      <span class="close">&times;</span>
+      <span class="prev">&#10094;</span>
+      <img src="" alt="Lightbox" />
+      <span class="next">&#10095;</span>
+      <div class="thumbs"></div>
+    </div>
+
+    <section id="contato" class="parallax">
+      <h2>Contato</h2>
+      <form
+        action="mailto:contato@jubilath.com.br"
+        method="post"
+        enctype="text/plain"
+      >
+        <input type="text" name="nome" placeholder="Seu nome" required />
+        <input type="email" name="email" placeholder="Seu e-mail" required />
+        <textarea
+          name="mensagem"
+          placeholder="Sua mensagem"
+          required
+        ></textarea>
+        <button type="submit">Enviar</button>
+      </form>
+    </section>
+
+    <footer>
+      <p>
+        &copy; 2025 Orquestra e Coral Jubilath. Todos os direitos reservados.
+      </p>
+    </footer>
+
+    <script>
+      // Scroll animations + parallax
+      const sections = document.querySelectorAll("section, .hero");
+      window.addEventListener("scroll", () => {
+        const scrollY = window.pageYOffset;
+        sections.forEach((sec) => {
+          if (scrollY + window.innerHeight - 100 > sec.offsetTop) {
+            sec.classList.add("show");
+          }
+          sec.style.transform = `translateY(${scrollY * 0.05}px)`;
+        });
+      });
+
+      // Lightbox premium avançado com fade e música
+      const bgMusic = document.getElementById("bgMusic");
+      const lightbox = document.getElementById("lightbox");
+      const lightboxImg = lightbox.querySelector("img");
+      const closeBtn = lightbox.querySelector(".close");
+      const nextBtn = lightbox.querySelector(".next");
+      const prevBtn = lightbox.querySelector(".prev");
+      const thumbsContainer = lightbox.querySelector(".thumbs");
+      const galleryImgs = document.querySelectorAll(".galeria .grid img");
+      let imgArray = Array.from(galleryImgs).map((img) => img.src);
+      let currentIndex = 0;
+
+      // criar miniaturas
+      imgArray.forEach((src, index) => {
+        const thumb = document.createElement("img");
+        thumb.src = src;
+        if (index === 0) thumb.classList.add("active");
+        thumb.addEventListener("click", () => fadeToIndex(index));
+        thumbsContainer.appendChild(thumb);
+      });
+
+      function showImage() {
+        lightboxImg.classList.remove("fade-in");
+        lightboxImg.classList.add("fade-out");
+        setTimeout(() => {
+          lightboxImg.src = imgArray[currentIndex];
+          lightboxImg.classList.remove("fade-out");
+          lightboxImg.classList.add("fade-in");
+          const thumbs = thumbsContainer.querySelectorAll("img");
+          thumbs.forEach((t) => t.classList.remove("active"));
+          thumbs[currentIndex].classList.add("active");
+        }, 400);
+      }
+
+      // fade de áudio
+      function fadeMusic(targetVolume, duration) {
+        const stepTime = 50;
+        const steps = duration / stepTime;
+        const volumeStep = (targetVolume - bgMusic.volume) / steps;
+        let i = 0;
+        const interval = setInterval(() => {
+          if (i >= steps) {
+            clearInterval(interval);
+            bgMusic.volume = targetVolume;
+          } else {
+            bgMusic.volume = Math.min(
+              Math.max(bgMusic.volume + volumeStep, 0),
+              1
+            );
+            i++;
+          }
+        }, stepTime);
+      }
+
+      // abrir lightbox
+      galleryImgs.forEach((img, index) => {
+        img.addEventListener("click", () => {
+          currentIndex = index;
+          showImage();
+          lightbox.classList.add("active");
+          bgMusic.volume = 0;
+          bgMusic.play();
+          fadeMusic(1, 1000);
+        });
+      });
+
+      // fechar lightbox
+      closeBtn.addEventListener("click", () => {
+        fadeMusic(0, 800);
+        setTimeout(() => {
+          bgMusic.pause();
+          lightbox.classList.remove("active");
+        }, 800);
+      });
+
+      // navegação com fade
+      function fadeToIndex(index) {
+        fadeMusic(0, 500);
+        setTimeout(() => {
+          currentIndex = index;
+          showImage();
+          fadeMusic(1, 500);
+        }, 500);
+      }
+
+      nextBtn.addEventListener("click", () =>
+        fadeToIndex((currentIndex + 1) % imgArray.length)
+      );
+      prevBtn.addEventListener("click", () =>
+        fadeToIndex((currentIndex - 1 + imgArray.length) % imgArray.length)
+      );
+
+      // autoplay slideshow
+      setInterval(() => {
+        if (lightbox.classList.contains("active")) {
+          fadeToIndex((currentIndex + 1) % imgArray.length);
+        }
+      }, 5000);
+
+      // PARTICULAS HERO
+      const canvas = document.getElementById("particles");
+      const ctx = canvas.getContext("2d");
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      let particlesArray = [];
+      class Particle {
+        constructor(x, y, radius, speedX, speedY) {
+          this.x = x;
+          this.y = y;
+          this.radius = radius;
+          this.speedX = speedX;
+          this.speedY = speedY;
+        }
+        update() {
+          this.x += this.speedX;
+          this.y += this.speedY;
+          if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+          if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+        }
+        draw() {
+          ctx.beginPath();
+          let gradient = ctx.createRadialGradient(
+            this.x,
+            this.y,
+            0,
+            this.x,
+            this.y,
+            this.radius
+          );
+          gradient.addColorStop(0, "rgba(224,184,77,0.8)");
+          gradient.addColorStop(1, "rgba(224,184,77,0)");
+          ctx.fillStyle = gradient;
+          ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      function initParticles(num = 80) {
+        particlesArray = [];
+        for (let i = 0; i < num; i++) {
+          let radius = Math.random() * 4 + 1;
+          let x = Math.random() * canvas.width;
+          let y = Math.random() * canvas.height;
+          let speedX = (Math.random() - 0.5) * 0.6;
+          let speedY = (Math.random() - 0.5) * 0.6;
+          particlesArray.push(new Particle(x, y, radius, speedX, speedY));
+        }
+      }
+      function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particlesArray.forEach((p) => {
+          p.update();
+          p.draw();
+        });
+        requestAnimationFrame(animateParticles);
+      }
+      initParticles();
+      animateParticles();
+      window.addEventListener("resize", () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        initParticles();
+      });
+    </script>
+  </body>
+</html>
